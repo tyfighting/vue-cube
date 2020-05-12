@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    isLogin: false,
+    isLogin: localStorage.getItem("token") ? true : false,
   },
   mutations: {
     login(state, b) {
@@ -23,6 +23,10 @@ export default new Vuex.Store({
         }
         return code;
       });
+    },
+    logout({ commit }) {
+      commit("login", false);
+      localStorage.removeItem("token");
     },
   },
   modules: {},

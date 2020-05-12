@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <cube-button @click="showDialog">Button</cube-button>
+    <cube-button @click="logout" v-if="$store.state.isLogin">注销</cube-button>
   </div>
 </template>
 
@@ -42,12 +42,8 @@ export default {
     };
   },
   methods: {
-    showDialog() {
-      this.$createDialog({
-        type: "alert",
-        title: "Alert",
-        content: "dialog content"
-      }).show();
+    logout() {
+      this.$store.dispatch("logout");
     }
   }
 };

@@ -49,12 +49,22 @@ export default {
     validateHandler() {},
     submitHandler(e) {
       e.preventDefault();
-      this.$store.dispatch("login", this.model).then(code => {
-        if (code) {
-          const path = this.$router.qurey.redirect;
-          this.$router.push(path);
-        }
-      });
+      this.$store
+        .dispatch("login", this.model)
+        .then(code => {
+          if (code) {
+            const path = this.$route.query.redirect;
+            this.$router.push(path);
+          }
+        })
+        .catch(err => {
+          const toast = this.$createToast({
+            time: 1000,
+            txt: err,
+            type: "error"
+          });
+          toast.show();
+        });
     }
   }
 };
