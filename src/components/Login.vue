@@ -3,7 +3,6 @@
     <cube-form
       :model="model"
       :schema="schema"
-      @validate="validateHandler"
       @submit="submitHandler"
     ></cube-form>
   </div>
@@ -46,7 +45,6 @@ export default {
     };
   },
   methods: {
-    validateHandler() {},
     submitHandler(e) {
       e.preventDefault();
       this.$store

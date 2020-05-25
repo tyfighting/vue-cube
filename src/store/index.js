@@ -1,33 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import us from "../../server/user";
+import user from "./user";
+import goods from "./goods";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-    isLogin: localStorage.getItem("token") ? true : false,
+  modules: {
+    user,
+    goods,
   },
-  mutations: {
-    login(state, b) {
-      state.isLogin = b;
-    },
-  },
-  actions: {
-    login({ commit }, user) {
-      return us.login(user).then((res) => {
-        const { code, token } = res.data;
-        if (code) {
-          commit("login", true);
-          localStorage.setItem("token", token);
-        }
-        return code;
-      });
-    },
-    logout({ commit }) {
-      commit("login", false);
-      localStorage.removeItem("token");
-    },
-  },
-  modules: {},
 });

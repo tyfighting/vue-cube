@@ -1,13 +1,30 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import History from "../utils/history";
 
 Vue.use(VueRouter);
+Vue.use(History);
+
+VueRouter.prototype.goBack = function() {
+  this.isBack = true;
+  this.back();
+};
 
 const routes = [
   {
-    path: "/",
+    path: "/home",
     name: "Home",
     component: () => import("../views/Home.vue"),
+  },
+  {
+    path: "/",
+    name: "Index",
+    component: () => import("../views/Index.vue"),
+  },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: () => import("../views/Cart.vue"),
   },
   {
     path: "/login",
@@ -15,11 +32,11 @@ const routes = [
     component: () => import("../components/Login.vue"),
   },
   {
-    path: "/about",
-    name: "About",
-    component: () => import("../views/About.vue"),
+    path: "/me",
+    name: "Me",
+    component: () => import("../views/Me.vue"),
     meta: {
-      auth: true,
+      auth: false,
     },
   },
 ];
@@ -47,4 +64,16 @@ router.beforeEach((to, form, next) => {
     next();
   }
 });
+
+router.afterEach((to) => {
+  if (router.isBack) {
+    History.pop();
+    router.isBack = false;
+    router.transitionName = "route-back";
+  } else {
+    History.push(to.path);
+    router.transitionName = "route-forward";
+  }
+});
+
 export default router;
