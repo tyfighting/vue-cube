@@ -50,9 +50,9 @@ export default {
       inner.style.transform = "translate3d(0,0,0)";
       el.addEventListener("transitionend", done);
     },
-    afterEnter(el) {
+    afterEnter() {
       this.show = false;
-      el.style.display = "none";
+      // el.style.display = "none";
       this.$emit("transitionend");
     }
   }
